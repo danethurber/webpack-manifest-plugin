@@ -100,7 +100,9 @@ Allows filtering the files which make up the manifest. The passed function shoul
 Type: `Function`<br>
 Default: `undefined`
 
-A custom `Function` to create the manifest. The passed function should match the signature of `(seed: Object, files: FileDescriptor[], entries: string[]) => Object` and can return anything as long as it's serialisable by `JSON.stringify`.
+A custom `Function` to create the manifest. The passed function should match the signature of `(seed: Object, files: FileDescriptor[], entries: string[], compilation: Compilation) => Object` and can return anything as long as it's serialisable by `JSON.stringify`.
+
+Type: [`Compilation`](https://github.com/webpack/webpack/blob/master/lib/Compilation.js)
 
 ### `map`
 
