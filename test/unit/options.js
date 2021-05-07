@@ -2,6 +2,7 @@ const { join } = require('path');
 
 const test = require('ava');
 const CopyPlugin = require('copy-webpack-plugin');
+const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
 const del = require('del');
 
 const { compile } = require('../helpers/unit');
@@ -116,6 +117,27 @@ test('useEntryKeys, exclude sourcemap', async (t) => {
     devtool: 'source-map'
   };
   const { manifest } = await compile(config, t, { useEntryKeys: true });
+
+  t.snapshot(manifest);
+});
+
+test('useLegacyEmit', async (t) => {
+  const config = {
+    context: __dirname,
+    entry: {
+      main: '../fixtures/file.js'
+    },
+    output: {
+      filename: '[name].js',
+      path: join(outputPath, 'useLegacyEmit')
+    },
+    plugins: [
+      new DependencyExtractionWebpackPlugin({
+        outputFormat: 'json'
+      })
+    ]
+  };
+  const { manifest } = await compile(config, t, { useLegacyEmit: true });
 
   t.snapshot(manifest);
 });

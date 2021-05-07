@@ -165,6 +165,15 @@ Default: `false`
 
 If `true`, the keys specified in the `entry` property will be used as keys in the manifest. No file extension will be added (unless specified as part of an `entry` property key).
 
+### `useLegacyEmit`
+
+Type: `Boolean`<br>
+Default: `false`
+
+If `true`, the manifest will be written on the deprecated webpack `emit` hook to be compatible with not yet updated webpack plugins.
+
+A lot of webpack plugins are not yet updated to match the new webpack 5 API. This is a problem when other plugins use the deprecated `emit` hook. The manifest will be written before these other plugins and thus files are missing on the manifest.
+
 ### `writeToFileEmit`
 
 Type: `Boolean`<br>
