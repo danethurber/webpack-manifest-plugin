@@ -220,3 +220,21 @@ test('should output unix paths', async (t) => {
     'some/dir/main.js': 'some/dir/main.js'
   });
 });
+
+test('supports public path auto', async (t) => {
+  const config = {
+    context: __dirname,
+    entry: {
+      one: '../fixtures/file.js'
+    },
+    output: {
+      filename: `[name].${hashLiteral}.js`,
+      path: join(outputPath, 'public-auto'),
+      publicPath: 'auto'
+    }
+  };
+  const { manifest, stats } = await compile(config, t);
+  t.deepEqual(manifest, {
+    'one.js': `one.${stats.hash}.js`
+  });
+});
