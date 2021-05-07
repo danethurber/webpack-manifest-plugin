@@ -1,9 +1,7 @@
-[tests]: 	https://img.shields.io/circleci/project/github/shellscape/webpack-manifest-plugin.svg
+[tests]: https://img.shields.io/circleci/project/github/shellscape/webpack-manifest-plugin.svg
 [tests-url]: https://circleci.com/gh/shellscape/webpack-manifest-plugin
-
 [cover]: https://codecov.io/gh/shellscape/webpack-manifest-plugin/branch/master/graph/badge.svg
 [cover-url]: https://codecov.io/gh/shellscape/webpack-manifest-plugin
-
 [size]: https://packagephobia.now.sh/badge?p=webpack-manifest-plugin
 [size-url]: https://packagephobia.now.sh/result?p=webpack-manifest-plugin
 
@@ -15,7 +13,6 @@
 [![cover][cover]][cover-url]
 [![size][size]][size-url]
 [![libera manifesto](https://img.shields.io/badge/libera-manifesto-lightgrey.svg)](https://liberamanifesto.com)
-
 
 # webpack-manifest-plugin
 
@@ -172,7 +169,6 @@ Default: `false`
 
 If `true`, will emit the manifest to the build directory _and_ in memory for compatibility with `webpack-dev-server`.
 
-
 ## Manifest File Descriptor
 
 This plugin utilizes the following object structure to work with files. Many options for this plugin utilize the structure below.
@@ -215,21 +211,29 @@ This plugin supports the following hooks via the `getCompilerHooks` export; `aft
 
 Returns: `{ afterEmit: SyncWaterfallHook, beforeEmit: SyncWaterfallHook }`
 
+### `processAssetsStage`
+
+Type: `Number`
+Default: `Infinity`
+
+If you need to consume the output of this plugin in another plugin, it can be useful to adjust the stage at which the manifest is generated. Pass a new stage to `processAssetsStage` to change when the manifest is generated. See the [docs on `processAssets`](https://webpack.js.org/api/compilation-hooks/#list-of-asset-processing-stages) for more detail.
+
+Note: any files added to the compilation after the stage specified will not be included in the manifest.
+
 #### Usage
 
 ```js
-const { getCompilerHooks } = require('webpack-manifest-plugin');
+const { getCompilerHooks } = require("webpack-manifest-plugin");
 
 class BatmanPlugin {
   apply(compiler) {
     const { beforeEmit } = getCompilerHooks(compiler);
 
-    beforeEmit.tap('BatmanPlugin', (manifest) => {
-      return { ...manifest, name: 'hello' };
-    })
+    beforeEmit.tap("BatmanPlugin", (manifest) => {
+      return { ...manifest, name: "hello" };
+    });
   }
 }
-
 ```
 
 ## Attiribution
